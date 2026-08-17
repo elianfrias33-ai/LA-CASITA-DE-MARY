@@ -37,7 +37,7 @@ export default function Menu() {
         eyebrow="Nuestra carta"
         title="Nuestro Menú"
         subtitle="Ingredientes de mercado, recetas de siempre y platos pensados para compartir."
-        image={img.carpaccio}
+        image={img.brunchBoard}
       />
 
       <div
@@ -49,7 +49,7 @@ export default function Menu() {
             <button
               key={cat.id}
               onClick={() => scrollTo(cat.id)}
-              className={`shrink-0 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${
+              className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
                 active === cat.id
                   ? "bg-terracotta text-cream shadow-sm"
                   : "bg-ink/[0.04] text-ink-muted hover:bg-ink/[0.08]"
@@ -62,6 +62,11 @@ export default function Menu() {
       </div>
 
       <div className="mx-auto max-w-7xl px-5 py-4 sm:px-8 lg:px-10">
+        <p className="mx-auto max-w-2xl pt-8 text-center text-xs italic text-ink-muted/60">
+          Contenido ilustrativo de demostración. El menú definitivo utilizará los platos y precios
+          oficiales de La Casita de Mary.
+        </p>
+
         {categories.map((cat, idx) => (
           <section
             key={cat.id}
@@ -69,7 +74,7 @@ export default function Menu() {
             ref={(el) => (sectionRefs.current[cat.id] = el)}
             className={`scroll-mt-40 py-12 sm:py-16 ${idx !== 0 ? "border-t border-ink/8" : ""}`}
           >
-            <SectionTitle align="left" eyebrow={`Categoría`} title={cat.name} subtitle={cat.description} />
+            <SectionTitle align="left" eyebrow="Categoría" title={cat.name} subtitle={cat.description} />
             <div className="mt-10">
               <MenuCarousel items={cat.items} />
             </div>

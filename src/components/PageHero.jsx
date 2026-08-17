@@ -6,6 +6,7 @@ export default function PageHero({ eyebrow, title, subtitle, image }) {
       <img
         src={image}
         alt=""
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25" />

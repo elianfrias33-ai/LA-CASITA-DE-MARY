@@ -54,7 +54,7 @@ export default function MenuCarousel({ items }) {
         aria-label="Anterior"
         onClick={() => scrollByCards(-1)}
         disabled={!canLeft}
-        className={`absolute left-0 top-[38%] hidden -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full bg-cream text-ink shadow-lg ring-1 ring-ink/10 transition-all duration-300 lg:flex h-11 w-11 ${
+        className={`absolute left-0 top-[38%] hidden -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full bg-cream text-ink shadow-lg ring-1 ring-ink/10 transition-all duration-300 hover:bg-terracotta hover:text-cream lg:flex h-11 w-11 ${
           canLeft ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
@@ -64,7 +64,7 @@ export default function MenuCarousel({ items }) {
         aria-label="Siguiente"
         onClick={() => scrollByCards(1)}
         disabled={!canRight}
-        className={`absolute right-0 top-[38%] hidden translate-x-4 -translate-y-1/2 items-center justify-center rounded-full bg-cream text-ink shadow-lg ring-1 ring-ink/10 transition-all duration-300 lg:flex h-11 w-11 ${
+        className={`absolute right-0 top-[38%] hidden translate-x-4 -translate-y-1/2 items-center justify-center rounded-full bg-cream text-ink shadow-lg ring-1 ring-ink/10 transition-all duration-300 hover:bg-terracotta hover:text-cream lg:flex h-11 w-11 ${
           canRight ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >

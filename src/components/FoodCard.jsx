@@ -14,16 +14,22 @@ export default function FoodCard({ item, className = "", index = 0 }) {
           src={item.img}
           alt={item.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-display text-lg leading-snug text-ink">{item.name}</h3>
-          <span className="whitespace-nowrap font-display text-lg text-terracotta">{item.price}</span>
+          {item.price ? (
+            <span className="whitespace-nowrap font-display text-lg text-terracotta">{item.price}</span>
+          ) : (
+            <span className="whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-ink-muted/60">
+              Precio pendiente
+            </span>
+          )}
         </div>
-        <p className="text-sm leading-relaxed text-ink-muted">{item.description}</p>
+        <p className="line-clamp-2 text-sm leading-relaxed text-ink-muted">{item.description}</p>
       </div>
     </motion.article>
   );

@@ -1,44 +1,82 @@
 // ============================================================
-// DATOS DEL RESTAURANTE — CONTENIDO DEMO
-// Reemplaza estos valores por la información real del cliente.
-// Todo lo demás en la web lee de aquí, así que un solo cambio
-// se refleja en Inicio, Nosotros, Contacto y Footer.
+// DATOS DEL RESTAURANTE
+// Teléfono/WhatsApp e Instagram son datos públicos reales
+// encontrados del restaurante. La dirección y el horario están
+// marcados como PENDIENTES DE CONFIRMACIÓN DEL CLIENTE antes de
+// producción (ver notas en cada campo) — no son inventados, pero
+// tienen una discrepancia/fuente no oficial que debe validarse.
+//
+// whatsappLink() / telLink() / mailLink() devuelven `null` cuando
+// el dato correspondiente no existe, y los componentes que los usan
+// (WhatsAppButton, Footer, Header, Contact, LocationSection) ya
+// muestran un estado "pendiente de confirmación" en ese caso.
 // ============================================================
 
 export const site = {
   name: "La Casita de Mary",
+  legalName: "La Casita de Mary Restaurante",
   shortName: "La Casita",
   tagline: "Cocina casera con alma",
   description:
-    "Recetas de siempre, ingredientes de mercado y un lugar que se siente como en casa. (Texto demo — pendiente de contenido definitivo del cliente).",
+    "Cocina venezolana y caribeña en Bayahíbe, República Dominicana. (Texto demo — pendiente de contenido definitivo del cliente).",
 
-  phone: "+34 910 00 00 00",
-  phoneDisplay: "910 00 00 00",
-  whatsapp: "34600001122",
-  whatsappDisplay: "+34 600 00 11 22",
-  email: "hola@lacasitademary.com",
+  // Dato público — usado para llamadas y WhatsApp (mismo número para ambos).
+  phone: "+1 829 348 4802",
+  phoneDisplay: "+1 (829) 348-4802",
+  whatsapp: "18293484802",
+  whatsappDisplay: "+1 (829) 348-4802",
+  email: null,
 
+  // PENDIENTE DE CONFIRMACIÓN DEL CLIENTE ANTES DE PRODUCCIÓN:
+  // dirección pública encontrada, pero con una discrepancia reportada
+  // entre fuentes. Se muestra como referencia (única disponible) con
+  // su propia nota de "pendiente de confirmación" — no se inventa una
+  // dirección alternativa.
   address: {
-    line1: "Calle de la Alegría, 24",
-    line2: "28012 Madrid, España",
-    mapsQuery: "Calle de la Alegría 24, Madrid",
+    line1: "Calle Tomasa, Cedeño, Bayahíbe, República Dominicana",
+    line2: "Pendiente de confirmación",
+    // El pin del mapa usa el área general de Bayahíbe (no la calle
+    // exacta) mientras la dirección no esté confirmada.
+    mapsQuery: "Bayahíbe, La Altagracia, República Dominicana",
   },
 
+  // Agrupado (usado en el resumen compacto de Inicio).
   hours: [
-    { days: "Martes a Viernes", time: "13:00 – 16:30 · 20:00 – 23:30" },
-    { days: "Sábado y Domingo", time: "13:00 – 17:00 · 20:00 – 00:00" },
+    { days: "Martes a Domingo", time: "7:30 am – 10:00 pm" },
     { days: "Lunes", time: "Cerrado" },
   ],
 
+  // PENDIENTE DE CONFIRMACIÓN DEL CLIENTE ANTES DE PRODUCCIÓN:
+  // horario público encontrado, desglosado día por día para el
+  // bloque "Horario de Atención" de Contacto (diseño ya aprobado,
+  // no agrupar los días).
+  weeklyHours: [
+    { day: "Lunes", time: "Cerrado" },
+    { day: "Martes", time: "7:30 am – 10:00 pm" },
+    { day: "Miércoles", time: "7:30 am – 10:00 pm" },
+    { day: "Jueves", time: "7:30 am – 10:00 pm" },
+    { day: "Viernes", time: "7:30 am – 10:00 pm" },
+    { day: "Sábado", time: "7:30 am – 10:00 pm" },
+    { day: "Domingo", time: "7:30 am – 10:00 pm" },
+  ],
+
+  // Instagram es dato público real. Facebook no confirmado — se deja
+  // en null (no inventar).
   social: {
-    instagram: "https://instagram.com/lacasitademary",
-    instagramHandle: "@lacasitademary",
-    facebook: "https://facebook.com/lacasitademary",
+    instagram: "https://instagram.com/lacasitademaryv",
+    instagramHandle: "@lacasitademaryv",
+    facebook: null,
   },
 };
 
 export const whatsappLink = (message) =>
-  `https://wa.me/${site.whatsapp}${message ? `?text=${encodeURIComponent(message)}` : ""}`;
+  site.whatsapp
+    ? `https://wa.me/${site.whatsapp}${message ? `?text=${encodeURIComponent(message)}` : ""}`
+    : null;
+
+export const telLink = () => (site.phone ? `tel:${site.phone.replace(/\s/g, "")}` : null);
+
+export const mailLink = () => (site.email ? `mailto:${site.email}` : null);
 
 export const mapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
   site.address.mapsQuery

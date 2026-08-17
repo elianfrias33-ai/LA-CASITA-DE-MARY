@@ -1,137 +1,173 @@
 import { motion } from "framer-motion";
-import PageHero from "../components/PageHero";
-import { site, whatsappLink, mapsEmbedSrc, mapsDirectionsLink } from "../data/site";
-import { img } from "../data/images";
+import { site, whatsappLink, mapsEmbedSrc, telLink } from "../data/site";
 
 const contactCards = [
   {
-    label: "Dirección",
-    lines: (s) => [s.address.line1, s.address.line2],
-    icon: PinIcon,
-  },
-  {
     label: "Teléfono",
-    lines: (s) => [s.phoneDisplay],
+    value: () => site.phoneDisplay || "Pendiente de confirmación",
     icon: PhoneIcon,
-    href: (s) => `tel:${s.phone.replace(/\s/g, "")}`,
+    href: () => telLink(),
   },
   {
     label: "WhatsApp",
-    lines: (s) => [s.whatsappDisplay],
+    value: () => site.whatsappDisplay || "Pendiente de confirmación",
     icon: WhatsAppIcon,
     href: () => whatsappLink("Hola, me gustaría hacer una reserva."),
   },
   {
     label: "Instagram",
-    lines: (s) => [s.social.instagramHandle],
+    value: () => site.social.instagramHandle || "Pendiente de confirmación",
     icon: InstagramIcon,
-    href: (s) => s.social.instagram,
+    href: () => site.social.instagram,
   },
 ];
 
 export default function Contact() {
   return (
     <>
-      <PageHero
-        eyebrow="Visítanos"
-        title="Contacto"
-        subtitle="Estamos aquí para ayudarte a reservar tu mesa o resolver cualquier duda."
-        image={img.tableSetting}
-      />
+      {/* SECCIÓN 1 — Ubicación */}
+      <section className="mx-auto max-w-7xl px-5 pt-16 pb-16 sm:px-8 sm:pt-20 sm:pb-20 lg:px-10 lg:pt-24 lg:pb-24">
+        <div className="grid gap-10 lg:grid-cols-5 lg:items-center lg:gap-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-2"
+          >
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
+              Ubicación
+            </span>
+            <h1 className="mt-3 font-display text-4xl leading-[1.05] text-ink sm:text-5xl">
+              Te esperamos en Bayahíbe.
+            </h1>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
-        {/* Quick action buttons — mobile first */}
-        <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
-          <a
-            href={whatsappLink("Hola, me gustaría hacer una reserva.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-4 text-[15px] font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5"
+            <div className="mt-7 flex items-start gap-3">
+              <PinIcon className="mt-0.5 h-5 w-5 shrink-0 text-terracotta" />
+              <span className="text-lg text-ink">{site.address.line1}</span>
+            </div>
+            <p className="mt-1.5 pl-8 text-sm text-ink-muted">{site.address.line2}</p>
+
+            <button
+              type="button"
+              disabled
+              title="Dirección pendiente de confirmación"
+              className="mt-8 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-terracotta/30 px-7 py-3.5 text-[15px] font-semibold text-cream/80"
+            >
+              <PinIcon className="h-4 w-4" />
+              Cómo llegar
+            </button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden rounded-[1.5rem] ring-1 ring-ink/10 lg:col-span-3"
           >
-            <WhatsAppIcon className="h-5 w-5" />
-            WhatsApp
-          </a>
-          <a
-            href={mapsDirectionsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-[15px] font-semibold text-cream shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-ink-soft"
-          >
-            <PinIcon className="h-5 w-5" />
-            Cómo llegar
-          </a>
-          <a
-            href={`tel:${site.phone.replace(/\s/g, "")}`}
-            className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-ink/15 px-6 py-4 text-[15px] font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-terracotta hover:text-terracotta sm:col-span-1"
-          >
-            <PhoneIcon className="h-5 w-5" />
-            Llamar ahora
-          </a>
+            <iframe
+              title="Mapa de Bayahíbe"
+              src={mapsEmbedSrc}
+              loading="lazy"
+              className="h-[320px] w-full sm:h-[420px] lg:h-[560px]"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </motion.div>
         </div>
+      </section>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-5">
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-1">
-            {contactCards.map((c, i) => (
-              <motion.div
-                key={c.label}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="rounded-2xl bg-cream-soft p-6"
-              >
-                <c.icon className="h-6 w-6 text-terracotta" />
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
-                  {c.label}
-                </p>
-                {c.href ? (
-                  <a
-                    href={c.href(site)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 block font-display text-lg text-ink transition-colors hover:text-terracotta"
+      {/* SECCIÓN 2 — Contacto + Horario */}
+      <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 lg:px-10 lg:pb-28">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+          {/* Contacto */}
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
+              Contacto
+            </span>
+            <h2 className="mt-3 font-display text-4xl leading-[1.05] text-ink sm:text-5xl">
+              Hablemos.
+            </h2>
+
+            <div className="mt-8 space-y-4">
+              {contactCards.map((c, i) => {
+                const hrefValue = c.href ? c.href() : null;
+                return (
+                  <motion.div
+                    key={c.label}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className="rounded-2xl bg-cream-soft p-6 transition-colors duration-300 hover:bg-cream-deep/50"
                   >
-                    {c.lines(site).map((l) => (
-                      <span key={l} className="block">{l}</span>
-                    ))}
-                  </a>
-                ) : (
-                  <div className="mt-1 font-display text-lg text-ink">
-                    {c.lines(site).map((l) => (
-                      <span key={l} className="block">{l}</span>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            ))}
-
-            <div className="rounded-2xl bg-ink p-6 text-cream">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-light">Horario</p>
-              <div className="mt-3 space-y-2">
-                {site.hours.map((h) => (
-                  <div key={h.days} className="flex justify-between gap-4 text-sm">
-                    <span className="text-cream/60">{h.days}</span>
-                    <span>{h.time}</span>
-                  </div>
-                ))}
-              </div>
+                    <c.icon className={`h-6 w-6 ${hrefValue ? "text-terracotta" : "text-ink-muted/50"}`} />
+                    <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
+                      {c.label}
+                    </p>
+                    {hrefValue ? (
+                      <a
+                        href={hrefValue}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 block font-display text-lg text-ink transition-colors hover:text-terracotta"
+                      >
+                        {c.value()}
+                      </a>
+                    ) : (
+                      <p className="mt-1 font-display text-lg text-ink/50">{c.value()}</p>
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
+          {/* Horario de Atención */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="overflow-hidden rounded-2xl ring-1 ring-ink/10 lg:col-span-3"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-[1.75rem] bg-ink px-6 py-10 sm:px-10 sm:py-12"
           >
-            <iframe
-              title="Mapa de ubicación"
-              src={mapsEmbedSrc}
-              loading="lazy"
-              className="h-[320px] w-full sm:h-[420px] lg:h-full lg:min-h-[520px]"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <span className="block text-center text-xs font-semibold uppercase tracking-[0.2em] text-gold-light">
+              Horario
+            </span>
+            <h3 className="mt-2 text-center font-display text-2xl text-cream sm:text-3xl">
+              Horario de Atención
+            </h3>
+
+            <div className="mt-8 divide-y divide-cream/10 sm:mt-10">
+              {site.weeklyHours.map((d) => {
+                const lines = d.time.split(" · ");
+                const closed = d.time === "Cerrado";
+                return (
+                  <div
+                    key={d.day}
+                    className="flex flex-col gap-1 py-3.5 first:pt-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                  >
+                    <span className="font-display text-base text-cream">{d.day}</span>
+                    <div className="sm:text-right">
+                      {lines.map((line) => (
+                        <p
+                          key={line}
+                          className={`text-sm leading-relaxed ${
+                            closed ? "italic text-cream/50" : "text-cream/70"
+                          }`}
+                        >
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="mt-8 text-center text-xs italic text-cream/40">
+              Horario de referencia — sujeto a confirmación oficial.
+            </p>
           </motion.div>
         </div>
       </section>

@@ -1,80 +1,51 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { site, mapsEmbedSrc, mapsDirectionsLink } from "../data/site";
-import SectionTitle from "./SectionTitle";
+import { site } from "../data/site";
 
+// Versión compacta para Inicio: la información completa de ubicación,
+// horario y contacto ya vive en la página Contacto — aquí solo
+// invitamos a visitar y llevamos allá con un botón.
 export default function LocationSection() {
   return (
-    <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28 lg:px-10">
-      <SectionTitle
-        align="left"
-        eyebrow="Visítanos"
-        title="Encuéntranos en el corazón de la ciudad"
-        subtitle="Reserva tu mesa o pásate a conocernos, te esperamos con los brazos abiertos."
-      />
+    <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col items-center gap-6 rounded-[1.75rem] bg-ink px-6 py-12 text-center text-cream sm:px-12 sm:py-14"
+      >
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-light">
+          Visítanos
+        </span>
+        <h2 className="font-display text-3xl leading-tight sm:text-4xl">
+          Visítanos en Bayahíbe.
+        </h2>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-5">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col justify-between gap-8 rounded-[1.5rem] bg-ink p-8 text-cream sm:p-10 lg:col-span-2"
-        >
-          <div className="space-y-7">
-            <InfoRow label="Dirección">
-              <p>{site.address.line1}</p>
-              <p className="text-cream/60">{site.address.line2}</p>
-            </InfoRow>
-            <InfoRow label="Horario">
-              {site.hours.map((h) => (
-                <p key={h.days} className="flex justify-between gap-4 text-sm">
-                  <span className="text-cream/60">{h.days}</span>
-                  <span>{h.time}</span>
-                </p>
-              ))}
-            </InfoRow>
-            <InfoRow label="Teléfono">
-              <a className="hover:text-gold-light transition-colors" href={`tel:${site.phone.replace(/\s/g, "")}`}>
-                {site.phoneDisplay}
-              </a>
-            </InfoRow>
+        <div className="flex items-start gap-2.5 text-left">
+          <PinIcon className="mt-1 h-5 w-5 shrink-0 text-terracotta" />
+          <div>
+            <p className="text-cream/85">{site.address.line1}</p>
+            <p className="mt-0.5 text-sm text-cream/45">{site.address.line2}</p>
           </div>
+        </div>
 
-          <a
-            href={mapsDirectionsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-6 py-3.5 text-center text-[15px] font-semibold text-cream transition-all duration-300 hover:bg-terracotta-dark"
-          >
-            Cómo llegar
-          </a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="overflow-hidden rounded-[1.5rem] ring-1 ring-ink/10 lg:col-span-3"
+        <Link
+          to="/contacto"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-7 py-3.5 text-[15px] font-semibold text-cream transition-all duration-300 hover:-translate-y-0.5 hover:bg-terracotta-dark"
         >
-          <iframe
-            title="Ubicación de La Casita de Mary"
-            src={mapsEmbedSrc}
-            loading="lazy"
-            className="h-[360px] w-full grayscale-[15%] sm:h-full"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </motion.div>
-      </div>
+          Ver ubicación
+        </Link>
+      </motion.div>
     </section>
   );
 }
 
-function InfoRow({ label, children }) {
+function PinIcon(props) {
   return (
-    <div className="space-y-1.5 border-b border-cream/10 pb-6 last:border-0 last:pb-0">
-      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-light">{label}</span>
-      <div className="text-[15px] leading-relaxed">{children}</div>
-    </div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
   );
 }

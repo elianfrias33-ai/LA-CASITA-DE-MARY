@@ -1,13 +1,13 @@
 import { img } from "./images";
 
-// Galería editorial mostrada en Inicio y Nosotros.
+// Galería editorial mostrada en Inicio y Nosotros (mosaico masonry).
 export const galleryImages = [
   { src: img.interiorDark, alt: "Ambiente cálido del comedor", size: "tall" },
-  { src: img.solomilloPlato, alt: "Plato de carne recién servido", size: "wide" },
-  { src: img.chefPrep, alt: "Preparación fresca en cocina", size: "small" },
-  { src: img.tableSetting, alt: "Mesa preparada para la cena", size: "small" },
-  { src: img.curryMarisco, alt: "Especialidad de mariscos de la casa", size: "wide" },
-  { src: img.interiorIndustrial, alt: "Sala del restaurante", size: "tall" },
-  { src: img.tiramisu, alt: "Postre casero de temporada", size: "small" },
-  { src: img.tapasFlatlay, alt: "Tapas variadas para compartir", size: "small" },
+  { src: img.costillasAhumadas, alt: "Plato de la casa recién servido", size: "square" },
+  { src: img.chefPrep, alt: "Preparación fresca en cocina", size: "medium" },
+  { src: img.tableSetting, alt: "Mesa preparada para la visita", size: "tall" },
+  { src: img.ensaladaTernera, alt: "Ensalada fresca de la casa", size: "square" },
+  { src: img.interiorIndustrial, alt: "Sala del restaurante", size: "medium" },
+  { src: img.cupcakeCasa, alt: "Postre dulce de la casa", size: "tall" },
+  { src: img.ensaladaGriega, alt: "Selección fresca de temporada", size: "square" },
 ];

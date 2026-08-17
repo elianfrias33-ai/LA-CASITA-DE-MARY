@@ -1,89 +1,106 @@
 import { Link } from "react-router-dom";
-import { site, whatsappLink } from "../data/site";
+import { site, whatsappLink, mapsDirectionsLink } from "../data/site";
+import Logo from "./Logo";
 
 export default function Footer() {
+  const waLink = whatsappLink("Hola, me gustaría hacer una consulta.");
+
   return (
     <footer className="bg-ink text-cream">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-cream text-ink font-display text-lg italic">
-                M
-              </span>
-              <span className="font-display text-xl">
+      <div className="mx-auto max-w-7xl px-5 pt-16 pb-24 sm:px-8 sm:pb-16 lg:px-10">
+        {/* Main content grid */}
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 pb-12">
+          {/* Left: Brand */}
+          <div className="flex flex-col gap-3">
+            <Link to="/" className="flex items-center gap-2.5 w-fit">
+              <Logo variant="light" />
+              <span className="font-display text-base sm:text-lg">
                 La Casita <span className="italic text-gold-light">de Mary</span>
               </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/60">
-              {site.tagline}. Un rincón cálido para disfrutar de la buena mesa.
+            <p className="text-xs sm:text-sm text-cream/70 max-w-xs leading-relaxed">
+              {site.tagline}. Sabores de Venezuela y el Caribe en Bayahíbe.
             </p>
           </div>
 
-          <div>
-            <h4 className="font-display text-lg text-gold-light">Navegación</h4>
-            <ul className="mt-4 space-y-3 text-sm text-cream/70">
-              <li><Link className="hover:text-cream transition-colors" to="/">Inicio</Link></li>
-              <li><Link className="hover:text-cream transition-colors" to="/menu">Menú</Link></li>
-              <li><Link className="hover:text-cream transition-colors" to="/nosotros">Nosotros</Link></li>
-              <li><Link className="hover:text-cream transition-colors" to="/contacto">Contacto</Link></li>
-            </ul>
+          {/* Center: Visit info */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gold-light">
+              ¿Nos vemos en la mesa?
+            </p>
+            <div className="text-xs sm:text-sm text-cream/70 space-y-1 leading-relaxed">
+              <p>{site.address.line1}</p>
+            </div>
+            <Link
+              to={mapsDirectionsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs sm:text-sm text-gold-light hover:text-cream transition-colors w-fit"
+            >
+              Cómo llegar
+              <span>→</span>
+            </Link>
           </div>
 
-          <div>
-            <h4 className="font-display text-lg text-gold-light">Visítanos</h4>
-            <ul className="mt-4 space-y-3 text-sm text-cream/70">
-              <li>{site.address.line1}</li>
-              <li>{site.address.line2}</li>
-              <li className="pt-1">
-                <a className="hover:text-cream transition-colors" href={`tel:${site.phone.replace(/\s/g, "")}`}>
-                  {site.phoneDisplay}
+          {/* Right: Social */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gold-light">
+              Síguenos
+            </p>
+            <div className="flex items-center gap-3">
+              {waLink ? (
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-all hover:border-gold-light hover:text-gold-light hover:bg-gold-light/5"
+                >
+                  <WhatsAppIcon />
                 </a>
-              </li>
-              <li>
-                <a className="hover:text-cream transition-colors" href={`mailto:${site.email}`}>
-                  {site.email}
+              ) : (
+                <span
+                  aria-label="WhatsApp — pendiente de confirmación"
+                  title="WhatsApp — pendiente de confirmación"
+                  className="flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-full border border-cream/10 text-cream/25"
+                >
+                  <WhatsAppIcon />
+                </span>
+              )}
+              {site.social.instagram ? (
+                <a
+                  href={site.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-all hover:border-gold-light hover:text-gold-light hover:bg-gold-light/5"
+                >
+                  <InstagramIcon />
                 </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-display text-lg text-gold-light">Horario</h4>
-            <ul className="mt-4 space-y-2.5 text-sm text-cream/70">
-              {site.hours.map((h) => (
-                <li key={h.days} className="flex flex-col">
-                  <span className="text-cream/90">{h.days}</span>
-                  <span>{h.time}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-5 flex items-center gap-3">
-              <a
-                href={whatsappLink("Hola, me gustaría hacer una consulta.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-gold-light hover:text-gold-light"
-              >
-                <WhatsAppIcon />
-              </a>
-              <a
-                href={site.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-gold-light hover:text-gold-light"
-              >
-                <InstagramIcon />
-              </a>
+              ) : (
+                <span
+                  aria-label="Instagram — pendiente de confirmación"
+                  title="Instagram — pendiente de confirmación"
+                  className="flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-full border border-cream/10 text-cream/25"
+                >
+                  <InstagramIcon />
+                </span>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-8 text-xs text-cream/40 sm:flex-row">
-          <p>© {new Date().getFullYear()} {site.name}. Todos los derechos reservados.</p>
-          <p>Demo comercial · Diseño y desarrollo por NOVIX</p>
+        {/* Divider */}
+        <div className="border-t border-cream/10" />
+
+        {/* Footer bottom */}
+        <div className="py-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-between text-xs text-cream/50">
+          <p>© {new Date().getFullYear()} {site.legalName}</p>
+          <nav className="flex items-center gap-4">
+            <Link className="transition-colors hover:text-cream/70" to="/menu">Menú</Link>
+            <span>·</span>
+            <Link className="transition-colors hover:text-cream/70" to="/contacto">Contacto</Link>
+          </nav>
         </div>
       </div>
     </footer>

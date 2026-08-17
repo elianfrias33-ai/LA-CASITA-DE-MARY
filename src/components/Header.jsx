@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { site } from "../data/site";
+import { site, telLink, whatsappLink } from "../data/site";
+import Logo from "./Logo";
 
 const navLinks = [
   { to: "/", label: "Inicio" },
@@ -14,6 +15,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const reservaLink = whatsappLink("Hola, me gustaría consultar disponibilidad para una reservación.");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -43,9 +45,10 @@ export default function Header() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
         <Link to="/" className="group flex items-center gap-2.5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-cream font-display text-lg italic transition-transform duration-300 group-hover:scale-105">
-            M
-          </span>
+          <Logo
+            variant="dark"
+            className="h-10 w-10 transition-transform duration-300 group-hover:scale-105"
+          />
           <span className="font-display text-xl leading-tight text-ink">
             La Casita <span className="italic text-terracotta">de Mary</span>
           </span>
@@ -79,19 +82,31 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <Link
-            to="/menu"
-            className="inline-flex items-center justify-center rounded-full bg-terracotta px-6 py-2.5 text-[15px] font-semibold text-cream shadow-sm transition-all duration-300 hover:bg-terracotta-dark hover:shadow-md"
-          >
-            Ver menú
-          </Link>
+          {reservaLink ? (
+            <a
+              href={reservaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-terracotta px-6 py-2.5 text-[15px] font-semibold text-cream shadow-sm transition-all duration-300 hover:bg-terracotta-dark hover:shadow-md"
+            >
+              Reservar mesa
+            </a>
+          ) : (
+            <button
+              disabled
+              title="WhatsApp pendiente de confirmación"
+              className="inline-flex items-center justify-center rounded-full bg-terracotta/50 px-6 py-2.5 text-[15px] font-semibold text-cream/50 shadow-sm cursor-not-allowed"
+            >
+              Reservar mesa
+            </button>
+          )}
         </div>
 
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
-          className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors md:hidden"
+          className="relative z-50 flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta md:hidden"
         >
           <span className="relative block h-4 w-6">
             <span
@@ -143,18 +158,33 @@ export default function Header() {
                   </NavLink>
                 </motion.div>
               ))}
-              <Link
-                to="/contacto"
-                className="mt-3 inline-flex items-center justify-center rounded-full bg-terracotta px-6 py-3.5 text-[15px] font-semibold text-cream"
-              >
-                Contactar
-              </Link>
-              <a
-                href={`tel:${site.phone.replace(/\s/g, "")}`}
-                className="mt-2 text-center text-sm text-ink-muted"
-              >
-                {site.phoneDisplay}
-              </a>
+              {reservaLink ? (
+                <a
+                  href={reservaLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center justify-center rounded-full bg-terracotta px-6 py-3.5 text-[15px] font-semibold text-cream"
+                >
+                  Reservar mesa
+                </a>
+              ) : (
+                <button
+                  disabled
+                  title="WhatsApp pendiente de confirmación"
+                  className="mt-3 inline-flex items-center justify-center rounded-full bg-terracotta/50 px-6 py-3.5 text-[15px] font-semibold text-cream/50 cursor-not-allowed w-full"
+                >
+                  Reservar mesa
+                </button>
+              )}
+              {telLink() ? (
+                <a href={telLink()} className="mt-2 text-center text-sm text-ink-muted">
+                  {site.phoneDisplay}
+                </a>
+              ) : (
+                <span className="mt-2 text-center text-sm text-ink-muted/50">
+                  Teléfono pendiente de confirmación
+                </span>
+              )}
             </nav>
           </motion.div>
         )}

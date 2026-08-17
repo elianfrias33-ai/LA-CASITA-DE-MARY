@@ -42,9 +42,10 @@ export default function About() {
             />
             <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-ink-muted">
               <p>
-                La Casita de Mary nace de un sueño sencillo: compartir la cocina de siempre con
-                quien se siente a nuestra mesa. Esta es una descripción de ejemplo — la historia
-                definitiva del restaurante se incorporará cuando el cliente confirme los detalles.
+                La Casita de Mary nace de un sueño sencillo: compartir la cocina de siempre, con
+                el calor de Bayahíbe, con quien se sienta a nuestra mesa. Esta es una descripción
+                de ejemplo — la historia definitiva del restaurante se incorporará cuando el
+                cliente confirme los detalles.
               </p>
               <p>
                 Cada plato que sale de nuestra cocina lleva el mismo cuidado que una comida
@@ -60,7 +61,7 @@ export default function About() {
             className="overflow-hidden rounded-[1.5rem]"
           >
             <img
-              src={img.tapasFlatlay}
+              src={img.tostadaAguacate}
               alt="Ingredientes frescos de mercado"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover"
@@ -94,14 +95,23 @@ export default function About() {
               subtitle="Nuestra propuesta se basa en tres pilares que guían cada decisión en la cocina y en la sala."
             />
             <div className="mt-8 space-y-6">
-              {values.map((v) => (
-                <div key={v.title} className="flex gap-4">
-                  <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-terracotta" />
+              {values.map((v, i) => (
+                <motion.div
+                  key={v.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex gap-5 border-t border-ink/8 pt-5 first:border-0 first:pt-0"
+                >
+                  <span className="font-display text-xl italic text-terracotta/50">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <div>
                     <h3 className="font-display text-lg text-ink">{v.title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-ink-muted">{v.text}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
